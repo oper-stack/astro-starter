@@ -2,6 +2,8 @@ import config from '../../site.config.mjs';
 
 export const SITE = config;
 export const SITE_URL = config.url.replace(/\/$/, '');
+/** PREVIEW_NOINDEX=1 at build time marks every page noindex and closes robots.txt: for demos and staging. */
+export const PREVIEW_NOINDEX = import.meta.env.PREVIEW_NOINDEX === '1';
 export type CollectionKey = keyof typeof config.collections;
 export const COLLECTION_KEYS = Object.keys(config.collections) as CollectionKey[];
 

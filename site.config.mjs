@@ -9,7 +9,8 @@
 export default {
   name: 'Isla Verde Property',
   shortName: 'Isla Verde',
-  url: 'https://isla-verde.example',
+  /** SITE_URL at build time overrides this (preview and demo deploys). */
+  url: globalThis.process?.env?.SITE_URL || 'https://isla-verde.example',
   language: 'en',
   locale: 'en_US',
   tagline: 'Buyer guides for condos and land on Isla Verde',

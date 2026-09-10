@@ -104,3 +104,12 @@ Isla Verde does not exist. Every district, project, developer, price, fee, rule 
 ## License
 
 MIT. Built by OperStack.
+
+## Preview and demo deploys
+
+Two build-time variables keep a staging or demo copy out of search engines without touching the config:
+
+- `SITE_URL=https://demo.example.com` overrides `url` in `site.config.mjs`, so canonicals, the sitemap and schema point at the preview host.
+- `PREVIEW_NOINDEX=1` marks every page `noindex`, drops the canonical tags and serves a robots.txt that disallows everything.
+
+The public demo of this starter runs with both set. Production builds set neither.
