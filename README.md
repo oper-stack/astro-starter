@@ -7,7 +7,7 @@ It ships with a complete fictional demo market, **Isla Verde**: six buyer guides
 ## Quick start
 
 ```
-git clone https://github.com/operstack/astro-starter my-site
+git clone https://github.com/oper-stack/astro-starter my-site
 cd my-site
 npm install
 npm run dev
