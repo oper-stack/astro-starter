@@ -1,0 +1,14 @@
+---
+description: What this site is, which market it serves, and the single source of truth for names, currency and places. Read first for any content or code task.
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Site passport
+
+- **Site:** {{SITE_NAME}} at {{SITE_URL}}. Language {{LANGUAGE}}. Market: {{MARKET}}. Currency code in copy: {{CURRENCY}}, spelled as a code after the number (`180,000 {{CURRENCY}}`), never as a sign.
+- **Source of truth:** `site.config.mjs`. Names, navigation, contact, the author line, place names, allowed claim sources and the agent summary live there. Components read the config; never hard-code a brand name, a place, a currency or a URL in a layout or a page.
+- **Collections:** `src/content/guides`, `areas`, `comparisons`, `news` (editorial, schema `articleSchema`) and `projects` (data cards, schema `entitySchema`). A page's URL is `/<collection>/<file-name>/`. There are no other routes for content.
+- **Places** this site writes about: {{PLACES}}. An anchor that names one of them links to that place's page. A page about one place never carries another market's residue (another country's currency, tax names or agencies).
+- **Voice:** a buyer's adviser who has read the documents. Plain sentences, the number first, the source in the same paragraph. No marketing adjectives, no "stunning", no "nestled".
+- **Fictional demo:** until the config is edited, every place, project, price and figure describes the fictional market Isla Verde. Replace them before publishing; never mix real and fictional figures on one site.

@@ -1,0 +1,17 @@
+---
+description: How a page earns citations from answer engines (AEO, GEO): answer-first blocks, citable passages, entity clarity, original data.
+globs: ["src/content/**/*.mdx"]
+alwaysApply: false
+---
+
+# Answer-first and citability
+
+Answer engines quote passages, not pages. Write so that a single paragraph, lifted out, still answers the question and names the source.
+
+- **The first 100 words** name the site, the market and the answer. A reader (or a model) that stops there has the number.
+- **Citable blocks:** at least two paragraphs of 130 to 170 words that each stand alone: a claim, the figure, the source, the qualification. No "as mentioned above", no "see below".
+- **Entity clarity:** the site name and the market appear together in the TldrBlock and the last paragraph. If the site name could be confused with another entity, the About page and `agentSummary` in `site.config.mjs` say what the site is not.
+- **Original data:** every commercial page carries at least one figure that only this site publishes (a table computed from the registry, a count the desk made, a survey of listings), stated with its method and date. Pages made only of other people's numbers are not cited.
+- **Questions as headings** only when the section answers them in its first sentence.
+- **FAQ:** three questions a buyer types, answered in two to four sentences with the figure. FAQ answers are unique to the page; an answer that could sit on any page sits on none.
+- **The .md rendition and llms.txt:** generated at build time. Components that carry meaning (TldrBlock) are converted to text; components that do not (calls to action) are dropped. Do not put facts inside components the generator drops.

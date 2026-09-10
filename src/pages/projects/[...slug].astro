@@ -1,0 +1,40 @@
+---
+import { getCollection, render } from 'astro:content';
+import EntityLayout from '../../layouts/EntityLayout.astro';
+import { SITE } from '../../lib/site';
+import { listAll, relatedFor, urlFor, isPublic } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const entries = (await getCollection('projects')).filter((e) => isPublic(e as any));
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const money = (n?: number) => (n === undefined ? undefined : `${n.toLocaleString('en-US')} ${d.currency ?? SITE.market.currency}`);
+const facts = [
+  { label: 'District', value: d.district },
+  { label: 'Developer', value: d.developer },
+  { label: 'Status', value: d.status },
+  { label: 'Completion', value: d.completionYear },
+  { label: 'Units', value: d.unitsTotal },
+  { label: 'Price from', value: money(d.priceFrom) },
+];
+const related = relatedFor({ id: entry.id, collection: 'projects', tags: d.tags, relatedSlugs: d.relatedSlugs }, await listAll());
+---
+<EntityLayout
+  collection="projects"
+  collectionLabel={SITE.collections.projects.label}
+  url={urlFor('projects', entry)}
+  title={d.title}
+  description={d.description}
+  name={d.name}
+  pubDate={d.pubDate}
+  updatedDate={d.updatedDate}
+  {facts}
+  sources={d.sources}
+  {related}
+  noindex={d.noindex}
+>
+  <Content />
+</EntityLayout>

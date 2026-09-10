@@ -1,0 +1,15 @@
+---
+description: Image hosting, transforms, dimensions, alt text and the check that every image URL still resolves.
+globs: ["src/content/**/*.mdx", "src/components/ResponsiveImage.astro", "src/lib/images.ts"]
+alwaysApply: false
+---
+
+# Images
+
+- **Hosts:** only the CDN hosts listed under `imageHosts` in `gates.config.json`. Never a stock-photo host, never a hotlink to another site, never a data URI in content.
+- **Transforms:** a CDN image is never referenced bare. `ResponsiveImage` builds a width-based srcset for Cloudinary URLs; other CDNs get a rule in `src/lib/images.ts`.
+- **Dimensions:** every `<img>` carries width and height so the layout does not shift. Heroes are 1200 by 525; inline images at most 960 wide.
+- **Alt text** describes what is in the picture for someone who cannot see it, in one sentence, without the word "image".
+- **One hero per page at most**, loaded eagerly with `fetchpriority="high"`; everything below the fold is lazy.
+- **Check on a schedule:** images break between deploys. `npx @operstack/gates --only 12` HEAD-requests every image URL in `src/`. Run it weekly, not only on commits.
+- **Local files** go in `public/images/` and are referenced by absolute path; the gate confirms each exists.

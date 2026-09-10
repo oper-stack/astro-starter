@@ -1,0 +1,14 @@
+---
+/** The answer-first block: the number or verdict the reader came for, in two or three sentences. */
+interface Props { label?: string }
+const { label = 'Quick answer' } = Astro.props;
+---
+<aside class="tldr" itemprop="abstract">
+  <p class="eyebrow">{label}</p>
+  <div class="tldr__body"><slot /></div>
+</aside>
+<style>
+  .tldr { border-top: 2px solid var(--accent); background: var(--paper-2); padding: 1rem 1.25rem 1.1rem; margin-bottom: 1.5rem; }
+  .tldr__body { font-size: 1.02rem; color: var(--ink); }
+  .tldr__body :global(p) { margin: 0; }
+</style>

@@ -1,0 +1,33 @@
+---
+import type { AnyEntry } from '../lib/content';
+import { urlFor, readingTime } from '../lib/content';
+interface Props { collection: string; entries: AnyEntry[]; numbered?: boolean }
+const { collection, entries, numbered = true } = Astro.props;
+---
+<div class="entry-list">
+  {entries.map((e, i) => (
+    <article class="entry">
+      <a href={urlFor(collection, e)} class="entry__link">
+        {numbered && <span class="entry__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>}
+        <span class="entry__body">
+          <span class="entry__title">{e.data.title}</span>
+          <span class="entry__desc">{e.data.description}</span>
+        </span>
+        <span class="entry__meta">{readingTime(e.body ?? '')} min</span>
+      </a>
+    </article>
+  ))}
+</div>
+<style>
+  .entry-list { border-top: 1px solid var(--rule); }
+  .entry { border-bottom: 1px solid var(--rule); }
+  .entry__link { display: flex; gap: 1.25rem; align-items: baseline; padding: 1.1rem 0; color: var(--ink); }
+  .entry__link:hover { text-decoration: none; }
+  .entry__link:hover .entry__title { color: var(--accent); }
+  .entry__num { font-family: var(--font-display); color: var(--muted); width: 2rem; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+  .entry__body { flex: 1; min-width: 0; }
+  .entry__title { display: block; font-family: var(--font-display); font-weight: 600; font-size: 1.25rem; line-height: 1.25; }
+  .entry__desc { display: block; color: var(--muted); font-size: .93rem; margin-top: .3rem; }
+  .entry__meta { color: var(--muted); font-size: .82rem; white-space: nowrap; }
+  @media (max-width: 640px) { .entry__meta { display: none; } }
+</style>

@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
+const action = SITE.contact.formAction || `mailto:${SITE.contact.email}`;
+const method = SITE.contact.formAction ? 'POST' : 'GET';
+---
+<BaseLayout title={`Contact ${SITE.shortName}`} description={SITE.cta.text} noindex={false}>
+  <section class="container" style="padding-block: 2.5rem 4rem; max-width: 40rem;">
+    <p class="eyebrow">Contact</p>
+    <h1 style="margin-top:.4rem;">{SITE.cta.title}</h1>
+    <p style="color: var(--ink-2); margin-top:.8rem; font-size:1.05rem;">{SITE.cta.text}</p>
+    <form class="form" {action} {method} enctype={SITE.contact.formAction ? 'application/x-www-form-urlencoded' : undefined}>
+      <label>Your name <input name="name" type="text" required autocomplete="name" /></label>
+      <label>Email <input name="email" type="email" required autocomplete="email" /></label>
+      <label>What are you looking at? <textarea name="message" rows="5" required placeholder="A listing link, a project name, or the question you want answered before paying a deposit."></textarea></label>
+      <label class="check"><input name="consent" type="checkbox" required /> I agree to be contacted about this request.</label>
+      <input type="hidden" name="_redirect" value="/thanks/" />
+      <button class="btn btn-primary" type="submit">{SITE.cta.button}</button>
+      {!SITE.contact.formAction && <p class="meta">This opens your mail app. Set <code>contact.formAction</code> in site.config.mjs to post to a form service instead.</p>}
+    </form>
+    {SITE.contact.whatsapp && <p style="margin-top:1.5rem;">Or on <a href={SITE.contact.whatsapp} target="_blank" rel="noopener">WhatsApp</a>.</p>}
+  </section>
+</BaseLayout>
+<style>
+  .form { display: grid; gap: 1rem; margin-top: 1.5rem; }
+  .form label { display: grid; gap: .35rem; font-weight: 500; font-size: .95rem; }
+  .form input:not([type=checkbox]), .form textarea { font: inherit; padding: .65rem .8rem; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--paper); color: var(--ink); min-height: 44px; }
+  .form .check { grid-template-columns: auto 1fr; align-items: center; font-weight: 400; }
+  .form .check input { width: 20px; height: 20px; }
+</style>

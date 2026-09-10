@@ -1,0 +1,16 @@
+---
+/** A short aside inside the body: a warning, a tip, a definition. Keep it under four sentences. */
+interface Props { kind?: 'note' | 'warning' | 'tip'; title?: string }
+const { kind = 'note', title } = Astro.props;
+const labels = { note: 'Note', warning: 'Check this', tip: 'Tip' };
+---
+<aside class={`callout callout--${kind}`}>
+  <p class="eyebrow" style={kind === 'warning' ? 'color: var(--warn);' : ''}>{title ?? labels[kind]}</p>
+  <div><slot /></div>
+</aside>
+<style>
+  .callout { padding: .9rem 1.1rem; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--paper-2); }
+  .callout--warning { border-color: color-mix(in srgb, var(--warn) 45%, var(--rule)); }
+  .callout :global(p) { margin: 0; }
+  .callout :global(p + p) { margin-top: .5rem; }
+</style>

@@ -1,0 +1,62 @@
+---
+import { SITE } from '../lib/site';
+const current = Astro.url.pathname;
+const isActive = (href: string) => href !== '/' && current.startsWith(href);
+---
+<header id="site-header" class="site-header">
+  <div class="container site-header__inner">
+    <a href="/" class="site-header__brand" aria-label={`${SITE.name}, home`}>{SITE.shortName}</a>
+    <nav class="site-header__nav" aria-label="Main">
+      {SITE.nav.map((item) => <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>)}
+    </nav>
+    <a href={SITE.cta.href} class="btn btn-primary site-header__cta">{SITE.cta.button}</a>
+    <button id="menu-btn" class="site-header__burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div id="mobile-menu" class="mobile-menu" hidden>
+    <nav class="container mobile-menu__inner" aria-label="Mobile">
+      {SITE.nav.map((item) => <a href={item.href} class="mobile-menu__link">{item.label}</a>)}
+      {SITE.footerNav.map((item) => <a href={item.href} class="mobile-menu__link">{item.label}</a>)}
+      <a href={SITE.cta.href} class="btn btn-primary" style="margin-top:.5rem;">{SITE.cta.button}</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); }
+  .site-header__inner { display: flex; align-items: center; gap: 1.5rem; min-height: 4rem; }
+  .site-header__brand { font-family: var(--font-display); font-weight: 600; font-size: 1.25rem; color: var(--ink); letter-spacing: -0.01em; }
+  .site-header__brand:hover { text-decoration: none; color: var(--accent); }
+  .site-header__nav { display: none; gap: 1.25rem; margin-left: auto; }
+  .site-header__nav a { color: var(--ink-2); font-size: 0.92rem; font-weight: 500; padding: .5rem 0; }
+  .site-header__nav a[aria-current="page"] { color: var(--accent); }
+  .site-header__nav a:hover { color: var(--accent); text-decoration: none; }
+  .site-header__cta { display: none; }
+  .site-header__burger { display: inline-flex; width: 44px; height: 44px; align-items: center; justify-content: center; margin-left: auto; background: none; border: 1px solid var(--rule); border-radius: var(--radius); color: var(--ink); }
+  .mobile-menu { position: fixed; inset: 4rem 0 0; background: var(--paper); overflow-y: auto; overscroll-behavior: contain; border-top: 1px solid var(--rule); }
+  .mobile-menu__inner { display: grid; gap: .5rem; padding-block: 1rem calc(2rem + env(safe-area-inset-bottom, 0px)); }
+  .mobile-menu__link { display: flex; align-items: center; min-height: 48px; padding: .6rem .9rem; border: 1px solid var(--rule); border-radius: var(--radius); color: var(--ink); font-weight: 500; }
+  @media (min-width: 900px) {
+    .site-header__nav { display: flex; }
+    .site-header__cta { display: inline-flex; }
+    .site-header__burger, .mobile-menu { display: none; }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  function setOpen(open: boolean) {
+    if (!btn || !menu) return;
+    menu.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    if (open) (menu.querySelector('a') as HTMLElement | null)?.focus();
+  }
+  btn?.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && btn?.getAttribute('aria-expanded') === 'true') { setOpen(false); btn.focus(); } });
+  window.addEventListener('resize', () => { if (window.innerWidth >= 900) setOpen(false); });
+</script>

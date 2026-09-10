@@ -1,0 +1,28 @@
+---
+description: How the agent works on this repository: think before acting, keep changes surgical, prefer config over code, turn tasks into verifiable goals.
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Engineering principles
+
+Adapted from the "think, simplify, be surgical, define done" school of agent guidelines. They make the agent careful, not slow; a typo fix needs none of this ceremony.
+
+## Think before acting
+- State assumptions. If a request has two readings, show both before choosing. If a simpler path exists, say so. If something is unclear, stop and name what.
+
+## Simplicity
+- The minimum that solves the task. No speculative features, no abstraction for one use, no handling of impossible errors. If 200 lines could be 50, rewrite.
+- In text: no padding, no filler phrases, no headings for their own sake. If three paragraphs say one thing, keep one.
+
+## Surgical changes
+- Touch only what the request touches. Do not reformat, refactor or "improve" neighbouring code. Match the file's existing style. Point out dead code nearby; do not delete it unasked.
+- Remove what your own change orphaned (imports, variables, paragraphs). Leave what was there before you.
+
+## Config over code
+- Names, places, currency, navigation, contact and sources live in `site.config.mjs`. A layout that needs one reads the config. A page that lists content calls `getCollection`. A list typed by hand is a bug waiting to go stale.
+- Thresholds live in `gates.config.json`. A failing gate is fixed in the page, not in the threshold.
+
+## Define done
+- Turn every task into a check: "the build passes and `npx @operstack/gates` exits 0", "the page appears in llms.txt", "the menu closes on Escape at 390 px". Work until the check passes, then report the check, not the effort.
+- For multi-step work, write the plan as steps with a check after each, and keep it to five steps.

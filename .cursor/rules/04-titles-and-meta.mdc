@@ -1,0 +1,14 @@
+---
+description: How titles, descriptions and slugs are written so they survive the search result and the answer engine.
+globs: ["src/content/**/*.mdx"]
+alwaysApply: false
+---
+
+# Titles, descriptions and slugs
+
+- **Title:** 40 to 60 characters, the promise in the first six words, the place name present, the year at most once and only when the content is dated. The brand suffix is added by the layout only when the whole string still fits 60 characters; never write it into the title.
+- **Never:** a title cut on "the", "for", "to", "and"; two format words ("Guide ... Guide"); a colon followed by nothing specific; a question the page does not answer in its first paragraph.
+- **Description:** 70 to 160 characters, one complete sentence that says what the page answers and for whom, ending on a noun or a number. It is the snippet and the answer engine's summary; write it last, after the page.
+- **Slug:** lower case, hyphens, the topic words in the order a person would type them, no dates, no stop words at the ends, under 80 characters. A slug never changes after publication; a renamed page gets a redirect in `vercel.json` and its old file is deleted.
+- **Duplicates:** no two pages share a title or a description. Two pages that could share one are one page.
+- **Stale echoes:** when a title changes, search the corpus for the old title in "read next" lines and anchors, and update them the same day.

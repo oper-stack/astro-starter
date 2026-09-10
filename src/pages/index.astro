@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EntryList from '../components/EntryList.astro';
+import { SITE, COLLECTION_KEYS } from '../lib/site';
+import { listCollection, urlFor } from '../lib/content';
+const guides = (await listCollection('guides')).slice(0, 5);
+const areas = await listCollection('areas');
+const projects = (await listCollection('projects')).slice(0, 4);
+const news = (await listCollection('news')).slice(0, 3);
+---
+<BaseLayout title={SITE.tagline} description={SITE.description}>
+  <section class="container hero">
+    <p class="eyebrow">{SITE.market.name}</p>
+    <h1 style="margin-top:.5rem; max-width: 18ch;">{SITE.tagline}</h1>
+    <p style="font-size:1.15rem; color: var(--ink-2); max-width: 52ch; margin-top:1rem; text-wrap: pretty;">{SITE.description}</p>
+    <div style="display:flex; gap:.75rem; flex-wrap:wrap; margin-top:1.5rem;">
+      <a class="btn btn-primary" href="/guides/">Start with the guides</a>
+      <a class="btn btn-outline" href="/projects/">Project data cards</a>
+    </div>
+  </section>
+
+  <section class="container" style="padding-block: 1rem 3rem;">
+    <div class="section-head"><h2>Buyer guides</h2><a href="/guides/">All guides</a></div>
+    <EntryList collection="guides" entries={guides} />
+  </section>
+
+  <section class="container" style="padding-block: 0 3rem;">
+    <div class="section-head"><h2>Districts</h2><a href="/areas/">All districts</a></div>
+    <div class="grid">
+      {areas.map((a) => <a class="card" href={urlFor('areas', a)}><h3>{a.data.title}</h3><p>{a.data.description}</p></a>)}
+    </div>
+  </section>
+
+  <section class="container" style="padding-block: 0 3rem;">
+    <div class="section-head"><h2>Projects</h2><a href="/projects/">All projects</a></div>
+    <div class="grid">
+      {projects.map((p) => { const d = p.data as any; return <a class="card" href={urlFor('projects', p)}><h3>{d.name}</h3><p>{[d.district, d.status, d.completionYear].filter(Boolean).join(' · ')}</p></a>; })}
+    </div>
+  </section>
+
+  <section class="container" style="padding-block: 0 3rem;">
+    <div class="section-head"><h2>News</h2><a href="/news/">All news</a></div>
+    <EntryList collection="news" entries={news} numbered={false} />
+  </section>
+</BaseLayout>
+<style>
+  .hero { padding-block: 3.5rem 2.5rem; }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+  .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
+</style>

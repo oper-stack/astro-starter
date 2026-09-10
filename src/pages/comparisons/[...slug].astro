@@ -1,0 +1,34 @@
+---
+import { getCollection, render } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { SITE } from '../../lib/site';
+import { listAll, relatedFor, urlFor, readingTime, isPublic } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const entries = (await getCollection('comparisons')).filter((e) => isPublic(e as any));
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const related = relatedFor({ id: entry.id, collection: 'comparisons', tags: d.tags, relatedSlugs: d.relatedSlugs }, await listAll());
+---
+<ArticleLayout
+  collection="comparisons"
+  collectionLabel={SITE.collections.comparisons.label}
+  url={urlFor('comparisons', entry)}
+  title={d.title}
+  description={d.description}
+  pubDate={d.pubDate}
+  updatedDate={d.updatedDate}
+  author={d.author}
+  tags={d.tags}
+  heroImage={d.heroImage}
+  heroAlt={d.heroAlt}
+  faq={d.faq}
+  {related}
+  readingTime={readingTime(entry.body ?? '')}
+  noindex={d.noindex}
+>
+  <Content />
+</ArticleLayout>

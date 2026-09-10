@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
+---
+<BaseLayout title="Thank you, your request is in" description="We reply within one working day." noindex={true}>
+  <section class="container" style="padding-block: 4rem; max-width: 40rem;">
+    <h1>Thank you</h1>
+    <p style="margin-top:1rem; color: var(--ink-2);">We reply within one working day. Meanwhile, the <a href="/guides/">guides</a> cover the questions most buyers on {SITE.market.name} ask first.</p>
+  </section>
+</BaseLayout>

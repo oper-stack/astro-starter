@@ -1,0 +1,38 @@
+---
+description: What "done" means on this site, draft against production, what the agent never does without an explicit instruction, and the report format.
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Definition of done
+
+## Before saying a page or a change is ready
+1. `npm run build` exits 0.
+2. `npx @operstack/gates --fail-on warn` exits 0, or every remaining warning is listed with a reason.
+3. For layout or style changes: the mobile standard checked at 390 by 844.
+4. For content: the page appears in `dist/llms.txt` and has at least two inbound links in the built HTML.
+
+"Looks fine" is not a check. A partial run ("I ran gates 1 to 4") is reported as partial.
+
+## Draft against production
+| The owner says | The agent does |
+|---|---|
+| "write", "draft", "prepare" | edits files locally, runs build and gates, reports; no commit |
+| "commit" | commits with a message that names the pages and the checks that passed |
+| "publish", "deploy", "push" | pushes to the deploy branch, waits for the deploy, reports the live URL |
+| "index", "submit" | runs IndexNow or the Google script for the named URLs only |
+| nothing about publishing | asks in one line: draft or publish? |
+
+## Never without an explicit instruction
+- Commit, push, deploy, or submit URLs for indexing.
+- Change a slug, delete a page, add a redirect.
+- Edit `gates.config.json` thresholds or `site.config.mjs` identity fields.
+- Add a dependency.
+
+## Report format (every task, three lines)
+```
+Done: <what changed, which pages>
+Deployed: yes / no
+Checks: build <pass/fail>, gates <pass/fail/partial>, mobile <checked/not needed>
+```
+If a check failed, the report names the failing gate and the file, and the next action.

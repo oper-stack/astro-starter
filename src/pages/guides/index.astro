@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EntryList from '../../components/EntryList.astro';
+import { SITE } from '../../lib/site';
+import { listCollection } from '../../lib/content';
+const entries = await listCollection('guides');
+const meta = SITE.collections.guides;
+---
+<BaseLayout title={`${meta.label} for ${SITE.market.name}`} description={meta.description}>
+  <section class="container" style="padding-block: 2.5rem 4rem;">
+    <header style="max-width: 44rem; margin-bottom: 2rem;">
+      <p class="eyebrow">{SITE.market.name}</p>
+      <h1 style="margin-top:.4rem;">{meta.label}</h1>
+      <p style="color: var(--ink-2); margin-top:.8rem; font-size:1.1rem;">{meta.description}</p>
+      <p class="meta" style="margin-top:.6rem;">{entries.length} {entries.length === 1 ? 'page' : 'pages'}</p>
+    </header>
+    <EntryList collection="guides" {entries} />
+  </section>
+</BaseLayout>

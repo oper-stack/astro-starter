@@ -1,0 +1,11 @@
+---
+import { SITE } from '../lib/site';
+---
+<section class="cta" aria-label="Contact">
+  <h2 style="font-size:1.4rem;">{SITE.cta.title}</h2>
+  <p style="margin:.6rem 0 1rem; color: var(--ink-2);">{SITE.cta.text}</p>
+  <a class="btn btn-primary" href={SITE.cta.href}>{SITE.cta.button}</a>
+</section>
+<style>
+  .cta { margin-top: 2rem; padding: 1.5rem 1.5rem 1.6rem; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 var(--radius) var(--radius) 0; }
+</style>

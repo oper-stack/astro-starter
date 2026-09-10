@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
+---
+<BaseLayout title={`About ${SITE.name}`} description={`Who writes ${SITE.name}, how figures are sourced and what the site does not do.`}>
+  <article class="container prose" style="padding-block: 2.5rem 4rem;">
+    <p class="eyebrow">About</p>
+    <h1>About {SITE.name}</h1>
+    <p>{SITE.editorial.authorBio}</p>
+    <h2>How figures are sourced</h2>
+    <p>Every price, fee, yield or occupancy figure names its source in the same paragraph, or is framed as a worked example with its assumptions stated. Where a developer's own figures are quoted on a project card, the card says so and links the document it was read from.</p>
+    <h2>What this site does not do</h2>
+    <p>It does not list property, take commission, or rank projects by who pays. Requests sent through the contact page are answered with documents and questions, not with a shortlist.</p>
+    <h2>Corrections</h2>
+    <p>If a figure on this site is wrong, write to <a href={`mailto:${SITE.contact.email}`}>{SITE.contact.email}</a> with the page and the source. Corrections are published on the page with the date.</p>
+  </article>
+</BaseLayout>

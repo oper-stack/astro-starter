@@ -1,0 +1,15 @@
+---
+description: Where figures come from, how they are attributed, what may never be invented. Applies to every number on the site.
+globs: ["src/content/**/*.mdx", "site.config.mjs"]
+alwaysApply: false
+---
+
+# Facts and sources
+
+- **Allowed sources** are listed in `site.config.mjs` under `market.allowedSources` and mirrored in `gates.config.json`. A yield, return, occupancy, nightly rate, income-per-period or growth figure passes only when one of them is named in the same paragraph, or when a sourcing phrase ("according to", "reported by", "data from") points at a named body.
+- **Worked examples** are allowed and must say so: "assume", "for example", "illustrative", "if you". The assumptions are stated before the result.
+- **Never invent** a statistic about the site's own operation (clients served, deals closed, years in business) or about a market (growth forecasts, demand shares) to fill a sentence. A missing figure is a missing sentence.
+- **Project cards** quote the developer's own figures and say so with the standard disclaimer line, and list each source with the date it was read in `sources`.
+- **Dates:** a figure carries its period ("first half of 2026"). `updatedDate` changes only when a fact on the page changed, never for a typo.
+- **Corrections:** a wrong figure is corrected on the page with a dated note, not silently.
+- **Legal figures** (taxes, fees, rules) cite the instrument and its effective date. When the rule changes, the news item links every guide that carried the old figure, and each guide is updated the same day.

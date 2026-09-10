@@ -1,0 +1,25 @@
+---
+description: The five page shapes this site publishes and what each must contain. Use when creating or rewriting a page.
+globs: ["src/content/**/*.mdx", "templates/**"]
+alwaysApply: false
+---
+
+# Page archetypes
+
+Scaffold with `node scripts/new-page.mjs <collection> "<title>"`; the template in `templates/<collection>.mdx` carries the skeleton. Every `{{PLACEHOLDER}}` left in place fails gate 04.
+
+| Archetype | Collection | Job | Minimum | Must contain |
+|---|---|---|---|---|
+| Guide | guides | answer one buying question end to end | 700 words, 3 FAQ | TldrBlock, cost table, step list from 1, pros and cons, risks, scenarios, 5 internal links |
+| District | areas | say what a place costs and who belongs there | 500 words, 2 FAQ | TldrBlock, price table by unit type, residents and renters, pros and cons, risks, scenarios |
+| Comparison | comparisons | two options, a verdict first | 500 words, 3 FAQ | TldrBlock with the verdict, side-by-side table, where A wins, where B wins, pros and cons of each, risks, who picks which |
+| Project card | projects | facts about one building, no opinion | 120 words | frontmatter facts (district, developer, status, completion, units, priceFrom, currency), `sources` with dates, the standard disclaimer line, what the source said in plain words |
+| News | news | one change, its date, its effect | 80 words | the change, the effective date, the source, what a buyer does differently, links to the guides it affects |
+
+Rules that cut across archetypes:
+
+- The TldrBlock is the answer, not a summary of the page. It carries the number and the source.
+- Tables carry facts; prose carries meaning. Do not repeat the table in the paragraph below it.
+- A scenario names a person and a decision ("the family moving to the island"), never "Scenario A".
+- A project card states only what a named source says. Editorial judgement belongs in guides and comparisons, which may link the card.
+- News pages are never padded to a word count. Three paragraphs is the ceiling.

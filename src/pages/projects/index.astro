@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../lib/site';
+import { listCollection, urlFor } from '../../lib/content';
+const entries = await listCollection('projects');
+const meta = SITE.collections.projects;
+---
+<BaseLayout title={`${meta.label} on ${SITE.market.name}: data cards`} description={meta.description}>
+  <section class="container" style="padding-block: 2.5rem 4rem;">
+    <header style="max-width: 44rem; margin-bottom: 2rem;">
+      <p class="eyebrow">{SITE.market.name}</p>
+      <h1 style="margin-top:.4rem;">{meta.label}</h1>
+      <p style="color: var(--ink-2); margin-top:.8rem; font-size:1.1rem;">{meta.description}</p>
+    </header>
+    <div class="prose" style="max-width:none;">
+      <table>
+        <thead><tr><th scope="col">Project</th><th scope="col">District</th><th scope="col">Status</th><th scope="col">Completion</th><th scope="col">Units</th><th scope="col">From</th></tr></thead>
+        <tbody>
+          {entries.map((e) => { const d = e.data as any; return (
+            <tr>
+              <td><a href={urlFor('projects', e)}>{d.name}</a></td>
+              <td>{d.district ?? ''}</td>
+              <td>{d.status ?? ''}</td>
+              <td>{d.completionYear ?? ''}</td>
+              <td>{d.unitsTotal ?? ''}</td>
+              <td>{d.priceFrom ? `${d.priceFrom.toLocaleString('en-US')} ${d.currency ?? SITE.market.currency}` : ''}</td>
+            </tr>
+          ); })}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</BaseLayout>

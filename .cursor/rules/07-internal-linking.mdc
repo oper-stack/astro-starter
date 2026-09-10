@@ -1,0 +1,15 @@
+---
+description: How pages link to each other: hubs and spokes, anchors, inbound links for new pages, the three places a new collection must be registered.
+globs: ["src/content/**/*.mdx", "src/pages/**", "src/lib/**"]
+alwaysApply: false
+---
+
+# Internal linking
+
+- **Every page links out** at least five times, with trailing slashes, to pages that exist and are indexable. Never to a noindex page, never to itself, the same URL at most twice.
+- **Every new page gets inbound links** the day it is published: from its hub (the collection index is automatic), from at least two related pages, and from the guide that covers its topic. A page with no inbound links is invisible however good it is; check the built HTML, not the source.
+- **Anchors say where they go.** A place-name anchor links to that place. A project-name anchor links to that project's card. No "click here", no "#3", no anchor that names district A and links to district B.
+- **Hubs and spokes:** guides are hubs, districts and comparisons are spokes, project cards are leaves. Leaves link up to their district and the buying guide; hubs link down to every spoke they mention.
+- **Related pages:** `relatedSlugs` in frontmatter is curated and comes first; `relatedFor()` in `src/lib/content.ts` fills the rest by shared tags. Curate the first two on every commercial page.
+- **A new collection** needs three registrations: `src/content.config.ts` (schema), `site.config.mjs` (`collections` entry and navigation) and a pair of routes in `src/pages/<collection>/`. The sitemap, llms.txt and the gates read the config and follow automatically.
+- **Never hard-code a slug list** in a page or a layout. Lists come from `getCollection` or from the config; a list typed by hand renders one stale card for weeks.

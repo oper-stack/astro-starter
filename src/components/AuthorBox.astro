@@ -1,0 +1,13 @@
+---
+import { SITE } from '../lib/site';
+interface Props { author?: string }
+const { author = SITE.editorial.author } = Astro.props;
+---
+<aside class="author" aria-label="About the author">
+  <p style="margin:0; font-weight:600;">{author}</p>
+  <p class="meta" style="margin:.1rem 0 .5rem; color: var(--accent);">{SITE.editorial.authorRole}</p>
+  <p style="margin:0; font-size:.95rem; color: var(--ink-2);">{SITE.editorial.authorBio} <a href="/about/">About {SITE.shortName}</a></p>
+</aside>
+<style>
+  .author { margin-top: 2.5rem; padding: 1.1rem 1.25rem; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--paper-2); }
+</style>

@@ -1,0 +1,19 @@
+---
+import type { RelatedLink } from '../lib/content';
+interface Props { links: RelatedLink[]; title?: string }
+const { links, title = 'Related pages' } = Astro.props;
+---
+{links.length > 0 && (
+  <nav aria-label={title} class="related">
+    <h2 style="font-size:1.3rem; margin-bottom:.8rem;">{title}</h2>
+    <ul>
+      {links.map((l) => <li><a href={l.href}>{l.title}</a>{l.description && <span class="meta"> {l.description}</span>}</li>)}
+    </ul>
+  </nav>
+)}
+<style>
+  .related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+  .related ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .7rem; }
+  .related li a { font-weight: 600; }
+  .related .meta { display: block; }
+</style>

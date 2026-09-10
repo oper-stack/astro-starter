@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Page not found" description="The page you asked for is not here." noindex={true}>
+  <section class="container" style="padding-block: 4rem; max-width: 40rem;">
+    <h1>Page not found</h1>
+    <p style="margin-top:1rem; color: var(--ink-2);">The address may have changed. Start from the <a href="/guides/">guides</a> or the <a href="/">home page</a>.</p>
+  </section>
+</BaseLayout>

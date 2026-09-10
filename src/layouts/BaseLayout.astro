@@ -1,0 +1,88 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, SITE_URL, pageTitle } from '../lib/site';
+import { organizationSchema, websiteSchema } from '../lib/schema';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  schemas?: object[];
+  preloadImage?: { src: string; srcset?: string; sizes?: string };
+}
+
+const {
+  title,
+  description = SITE.description,
+  canonical = Astro.url.href,
+  ogImage,
+  type = 'website',
+  noindex = false,
+  schemas = [],
+  preloadImage,
+} = Astro.props;
+
+function withTrailingSlash(href: string): string {
+  try {
+    const u = new URL(href);
+    if (!u.pathname.endsWith('/') && !u.pathname.includes('.')) u.pathname = `${u.pathname}/`;
+    return u.href;
+  } catch { return href; }
+}
+const canonicalUrl = withTrailingSlash(canonical);
+const fullTitle = pageTitle(title);
+const og = ogImage ? (ogImage.startsWith('http') ? ogImage : `${SITE_URL}${ogImage}`) : `${SITE_URL}/og-default.png`;
+const allSchemas = [organizationSchema(), websiteSchema(), ...schemas];
+---
+<!doctype html>
+<html lang={SITE.language}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  {noindex ? <meta name="robots" content="noindex,follow" /> : <meta name="robots" content="index,follow,max-image-preview:large" />}
+  {!noindex && <link rel="canonical" href={canonicalUrl} />}
+  <meta property="og:type" content={type} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:image" content={og} />
+  <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:locale" content={SITE.locale} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={og} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="Index for AI agents" />
+  {preloadImage && (
+    <link rel="preload" as="image" href={preloadImage.src} fetchpriority="high" {...(preloadImage.srcset ? { imagesrcset: preloadImage.srcset, imagesizes: preloadImage.sizes } : {})} />
+  )}
+  {allSchemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  {SITE.analytics.ga4 && (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${SITE.analytics.ga4}`}></script>
+      <script is:inline define:vars={{ id: SITE.analytics.ga4 }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        gtag('js', new Date()); gtag('config', id);
+      </script>
+    </>
+  )}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <Header />
+  <main id="main">
+    <slot />
+  </main>
+  <Footer />
+</body>
+</html>

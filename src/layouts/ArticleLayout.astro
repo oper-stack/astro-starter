@@ -1,0 +1,98 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FaqBlock from '../components/FaqBlock.astro';
+import AuthorBox from '../components/AuthorBox.astro';
+import RelatedGuides from '../components/RelatedGuides.astro';
+import ContactCta from '../components/ContactCta.astro';
+import ResponsiveImage from '../components/ResponsiveImage.astro';
+import { SITE, absoluteUrl } from '../lib/site';
+import { articleSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+import { responsive } from '../lib/images';
+import type { RelatedLink } from '../lib/content';
+
+interface Props {
+  collection: string;
+  collectionLabel: string;
+  url: string;
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  author?: string;
+  tags?: string[];
+  heroImage?: string;
+  heroAlt?: string;
+  faq?: { question: string; answer: string }[];
+  related?: RelatedLink[];
+  readingTime?: number;
+  noindex?: boolean;
+}
+
+const {
+  collection, collectionLabel, url, title, description, pubDate, updatedDate,
+  author = SITE.editorial.author, tags = [], heroImage, heroAlt, faq = [], related = [], readingTime = 6, noindex = false,
+} = Astro.props;
+
+const canonical = absoluteUrl(url);
+const shown = updatedDate ?? pubDate;
+const dateText = shown.toLocaleDateString(SITE.language, { year: 'numeric', month: 'long', day: 'numeric' });
+const schemas = [
+  breadcrumbSchema([{ name: 'Home', href: '/' }, { name: collectionLabel, href: `/${collection}/` }, { name: title, href: url }]),
+  articleSchema({ title, description, url: canonical, pubDate, updatedDate, heroImage, author }),
+  ...(faq.length ? [faqSchema(faq)!] : []),
+];
+const hero = heroImage ? responsive(heroImage, 'hero') : null;
+---
+<BaseLayout {title} {description} canonical={canonical} type="article" ogImage={heroImage} {noindex} {schemas} preloadImage={hero ?? undefined}>
+  <article class="container" style="padding-block: 2rem 4rem;">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: collectionLabel, href: `/${collection}/` }, { label: title }]} />
+    <header style="max-width: 46rem; margin-block: 1.5rem 2rem;">
+      {tags.length > 0 && <div style="display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom: .9rem;">{tags.slice(0, 4).map((t) => <span class="badge">{t}</span>)}</div>}
+      <h1 class="article-headline">{title}</h1>
+      <p class="article-intro" style="font-size: 1.15rem; color: var(--ink-2); margin-top: 1rem; text-wrap: pretty;">{description}</p>
+      <p class="meta" style="margin-top: 1rem;">
+        <time datetime={shown.toISOString()}>{updatedDate ? 'Updated' : 'Published'} {dateText}</time>
+        <span aria-hidden="true"> · </span>{readingTime} min read
+        <span aria-hidden="true"> · </span>{author}
+      </p>
+    </header>
+    {hero && (
+      <figure style="margin: 0 0 2.5rem; border-radius: var(--radius); overflow: hidden; aspect-ratio: 16 / 7; background: var(--paper-2);">
+        <ResponsiveImage src={heroImage!} alt={heroAlt ?? title} role="hero" width={1200} height={525} loading="eager" fetchpriority="high" style="width:100%; height:100%; object-fit: cover;" />
+      </figure>
+    )}
+    <div class="article-grid">
+      <div class="prose">
+        <slot />
+        {faq.length > 0 && <FaqBlock items={faq} />}
+      </div>
+      <aside class="article-aside">
+        <div class="aside-card">
+          <p class="eyebrow">Before you sign</p>
+          <p style="margin:.5rem 0 1rem; color: var(--ink-2); font-size:.95rem;">{SITE.cta.text}</p>
+          <a class="btn btn-primary" href={SITE.cta.href} style="width:100%;">{SITE.cta.button}</a>
+        </div>
+        {related.length > 0 && (
+          <nav aria-label="Related pages" style="margin-top: 1.5rem;">
+            <p class="eyebrow" style="margin-bottom:.6rem;">Read next</p>
+            <ul style="list-style:none; padding:0; margin:0; display:grid; gap:.5rem;">
+              {related.map((r) => <li><a href={r.href} style="font-size:.95rem;">{r.title}</a></li>)}
+            </ul>
+          </nav>
+        )}
+      </aside>
+    </div>
+    <div style="max-width: var(--measure);">
+      <AuthorBox {author} />
+      <ContactCta />
+      <RelatedGuides links={related} />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .article-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3rem; align-items: start; }
+  @media (min-width: 1100px) { .article-grid { grid-template-columns: minmax(0, 1fr) 17rem; } .article-aside { position: sticky; top: 5.5rem; } }
+  .aside-card { border: 1px solid var(--rule); border-radius: var(--radius); padding: 1.1rem 1.2rem; background: var(--paper-2); }
+</style>

@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
+---
+<BaseLayout title="Privacy notice" description={`What ${SITE.name} stores when you use the site or send a request, and how to have it removed.`} noindex={true}>
+  <article class="container prose" style="padding-block: 2.5rem 4rem;">
+    <h1>Privacy notice</h1>
+    <p>This is a template notice. Replace it with the text your jurisdiction requires before you publish.</p>
+    <h2>What is collected</h2>
+    <p>The contact form sends your name, email and message to {SITE.contact.email}. Analytics, when enabled in the configuration, records page views without personal identifiers.</p>
+    <h2>How to have it removed</h2>
+    <p>Write to <a href={`mailto:${SITE.contact.email}`}>{SITE.contact.email}</a>. Requests are handled within 30 days.</p>
+  </article>
+</BaseLayout>

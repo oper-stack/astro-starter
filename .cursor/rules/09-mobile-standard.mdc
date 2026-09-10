@@ -1,0 +1,18 @@
+---
+description: The mobile standard every layout and component must meet before deploy: touch targets, menu behaviour, tables, motion.
+globs: ["src/layouts/**", "src/components/**", "src/styles/**"]
+alwaysApply: false
+---
+
+# Mobile standard
+
+Check at 390 by 844 before any deploy that touched a layout, a component or the styles.
+
+- **Touch targets** at least 44 by 44 px: buttons, menu links, FAQ summaries, form fields.
+- **The menu** closes on Escape, on link click and on resize past the breakpoint, locks background scroll while open, and moves focus into itself when opened and back to the button when closed.
+- **No horizontal scroll** on the page. Tables scroll inside their own container (`.prose table` is `display: block; overflow-x: auto`).
+- **Body text** at least 16 px. Line length under 70 characters.
+- **One bottom element at most:** a sticky bar, a chat button or a cookie notice, never two stacked. This starter ships none; if you add one, it must not cover the form or the FAQ.
+- **Motion:** menus, accordions, filters and forms open instantly or within 300 ms with no bounce. Nothing animates on scroll. `prefers-reduced-motion` disables everything decorative (already in `global.css`).
+- **Forms:** labels visible, `autocomplete` set, `inputmode` on numeric and phone fields, the submit button reachable without scrolling past the form.
+- **Contrast:** text on paper at least 4.5 to 1; the accent on the button at least 4.5 to 1 in both themes.

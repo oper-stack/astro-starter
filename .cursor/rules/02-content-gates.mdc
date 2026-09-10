@@ -1,0 +1,41 @@
+---
+description: The fifteen quality gates every page must pass before npx @operstack/gates runs. State of the rules the gates enforce.
+globs: ["src/content/**/*.mdx", "src/content/**/*.md"]
+alwaysApply: false
+---
+
+# Content gates
+
+Run `npx @operstack/gates` before showing a page. A failing gate is a finding, not an opinion: fix the page, do not edit the threshold.
+
+## Characters
+- Currency as a code after the number. No emoji or pictographs. No em or en dashes; use a comma, a colon, parentheses, or "to" in ranges.
+
+## Frontmatter
+- Required: title, description, pubDate, tags. Title 40 to 60 characters, ends on a content word, one year at most, "guide" or "review" at most once. Description 70 to 160 characters, one complete sentence, no ellipsis, not ending on a stop word.
+- `relatedSlugs` point only at pages that exist and are indexable. `heroImage` only on hosts listed in `gates.config.json`; never a stock-photo host.
+
+## Structure of a commercial page (guides, areas, comparisons)
+- Opens with `<TldrBlock>`: two or three sentences with the number the reader came for and its source.
+- At least four H2 sections, each with real body text; never a heading with nothing under it; never a section that opens by restating its heading.
+- At least one table with six or more rows across the page. A cell never holds only a comma.
+- The FAQ count the collection requires (guides 3, areas 2, comparisons 3), in frontmatter `faq:`; each answer specific to its question.
+- Pros and cons, a risks or checklist block, and scenarios ("who this is for").
+- Numeric facts: at least three per 500 words. At most 35 bold spans. At least five internal links, all with a trailing slash.
+- No H1 in the body. No heading skips. No draft markers (`[VERIFY]`, `TODO`, `source needed`). No AI filler: moreover, furthermore, in conclusion, it is important to note, delve into, unlock the potential, a testament to, "not just X but Y". Numbered steps start at 1.
+
+## Uniqueness
+- A paragraph belongs to one page. Two pages that need the same explanation: one explains, the other links. Never generate a paragraph from a template and swap the numbers.
+- One sentence may not appear on three pages. Disclaimers that must repeat are listed under `boilerplate` in `gates.config.json` and nowhere else.
+
+## Links
+- The anchor says where the link goes. A place-name anchor links to that place. An entity-name anchor links to the entity's own page. No "#3 on our list", no self links, one URL at most twice per page.
+
+## Readability
+- Sentences under 45 words, paragraphs under 170 words. No "Scenario A, B, C, D" blocks: name scenarios by who they are for.
+
+## Figures
+- Every yield, ROI, occupancy, nightly rate, income-per-period or appreciation figure names its source in the same paragraph, or is framed as a worked example with stated assumptions. Never invent a figure to fill a table.
+
+## Redirects and the agent index
+- A redirected page has no source file, or its source carries `noindex: true`. Redirects point at the final target; no chains, no cycles. `llms.txt` is generated at build time from the corpus; never edit it by hand.

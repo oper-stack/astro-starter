@@ -1,0 +1,56 @@
+---
+title: "{{TITLE}}"
+description: "{{DESCRIPTION: one complete sentence of 70 to 160 characters that says what the page answers and for whom}}"
+pubDate: {{DATE}}
+author: {{AUTHOR}}
+tags: []
+relatedSlugs: []
+faq:
+  - question: "{{A question a buyer actually types}}"
+    answer: "{{A specific answer with the number or the rule, two to four sentences}}"
+  - question: "{{Second question}}"
+    answer: "{{Second answer}}"
+  - question: "{{Third question}}"
+    answer: "{{Third answer}}"
+---
+import TldrBlock from '../../components/TldrBlock.astro';
+import Callout from '../../components/Callout.astro';
+
+<TldrBlock>
+{{The answer in two or three sentences, with the number the reader came for and its source.}}
+</TldrBlock>
+
+## {{What it costs, or the first question the reader asks}}
+
+{{Open with the fact, then the table. Every figure names its source in the same paragraph.}}
+
+| {{Column}} | {{Column}} | {{Column}} |
+|---|---|---|
+| {{row}} | {{row}} | {{row}} |
+| {{row}} | {{row}} | {{row}} |
+| {{row}} | {{row}} | {{row}} |
+| {{row}} | {{row}} | {{row}} |
+
+## {{How it works, step by step}}
+
+**Step 1:** {{...}}
+
+**Step 2:** {{...}}
+
+**Step 3:** {{...}}
+
+## Pros and cons
+
+{{Two short paragraphs: what this option gives, what it costs. No bullet lists of adjectives.}}
+
+## Risks and what to check
+
+{{The three checks that matter, and the one defect that cannot be fixed after purchase.}}
+
+<Callout kind="warning">
+{{The single most expensive mistake on this topic, in two sentences.}}
+</Callout>
+
+## Who this is for: scenarios
+
+{{Scenario one: who, what they buy, why. Scenario two. Link the district page and one related guide.}}

@@ -1,0 +1,50 @@
+{
+  "name": "operstack-astro-starter",
+  "version": "0.1.0",
+  "description": "Astro starter for content sites that have to rank, be cited and convert: config-driven layouts, five content collections, answer-first article template, honest sitemap, llms.txt, IndexNow, and the fifteen OperStack gates wired in. Ships with a fictional demo market, Isla Verde.",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "author": "OperStack",
+  "keywords": [
+    "astro",
+    "astro-theme",
+    "starter",
+    "seo",
+    "aeo",
+    "geo",
+    "mdx",
+    "content-site",
+    "llms-txt",
+    "programmatic-seo"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "gates": "npx @operstack/gates",
+    "verify": "astro build && npx @operstack/gates --fail-on warn",
+    "new": "node scripts/new-page.mjs",
+    "indexnow": "node scripts/indexnow.mjs",
+    "index:google": "node scripts/google-indexing.mjs"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.0",
+    "@astrojs/mdx": "^8.0.1",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/public-sans": "^5.3.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.2",
+    "tailwindcss": "^4.3.3",
+    "unist-util-visit": "^5.1.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^5.6.0"
+  }
+}

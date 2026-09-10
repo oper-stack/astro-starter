@@ -1,0 +1,65 @@
+---
+/**
+ * A data card: facts from named sources, no editorial claims. Used for projects,
+ * and a good fit for developers, products or venues. The body carries what the
+ * source said; the table carries the fields; the sources list carries the receipts.
+ */
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ContactCta from '../components/ContactCta.astro';
+import RelatedGuides from '../components/RelatedGuides.astro';
+import { SITE, absoluteUrl } from '../lib/site';
+import { breadcrumbSchema } from '../lib/schema';
+import type { RelatedLink } from '../lib/content';
+
+interface Props {
+  collection: string;
+  collectionLabel: string;
+  url: string;
+  title: string;
+  description: string;
+  name: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  facts: { label: string; value: string | number | undefined }[];
+  sources?: { url: string; date: Date | string; label?: string }[];
+  related?: RelatedLink[];
+  noindex?: boolean;
+}
+const { collection, collectionLabel, url, title, description, name, pubDate, updatedDate, facts, sources = [], related = [], noindex = false } = Astro.props;
+const canonical = absoluteUrl(url);
+const shown = updatedDate ?? pubDate;
+const rows = facts.filter((f) => f.value !== undefined && f.value !== '');
+const schemas = [
+  breadcrumbSchema([{ name: 'Home', href: '/' }, { name: collectionLabel, href: `/${collection}/` }, { name: name, href: url }]),
+  { '@context': 'https://schema.org', '@type': 'Place', name, description, url: canonical, address: { '@type': 'PostalAddress', addressRegion: SITE.market.name, addressCountry: SITE.market.countryCode } },
+];
+---
+<BaseLayout {title} {description} canonical={canonical} {noindex} {schemas}>
+  <article class="container" style="padding-block: 2rem 4rem; max-width: 52rem;">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: collectionLabel, href: `/${collection}/` }, { label: name }]} />
+    <header style="margin-block: 1.5rem 1.5rem;">
+      <p class="eyebrow">Data card</p>
+      <h1 class="article-headline" style="margin-top:.4rem;">{name}</h1>
+      <p class="article-intro" style="font-size: 1.1rem; color: var(--ink-2); margin-top: .8rem;">{description}</p>
+      <p class="meta" style="margin-top:.8rem;"><time datetime={shown.toISOString()}>Card updated {shown.toLocaleDateString(SITE.language, { year: 'numeric', month: 'long', day: 'numeric' })}</time></p>
+    </header>
+    <div class="prose">
+      <table>
+        <thead><tr><th scope="col">Field</th><th scope="col">Value</th></tr></thead>
+        <tbody>{rows.map((f) => <tr><td>{f.label}</td><td>{String(f.value)}</td></tr>)}</tbody>
+      </table>
+      <slot />
+      {sources.length > 0 && (
+        <section aria-label="Sources">
+          <h2>Sources</h2>
+          <ul>{sources.map((s) => <li><a href={s.url} rel="nofollow noopener" target="_blank">{s.label ?? s.url}</a>, read {s.date instanceof Date ? s.date.toISOString().slice(0, 10) : s.date}</li>)}</ul>
+        </section>
+      )}
+    </div>
+    <div style="max-width: var(--measure);">
+      <ContactCta />
+      <RelatedGuides links={related} />
+    </div>
+  </article>
+</BaseLayout>
