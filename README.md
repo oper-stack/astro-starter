@@ -2,6 +2,8 @@
 
 An Astro starter for content sites that have to rank, be cited by answer engines and convert. It comes with five content collections, an answer-first article layout, data cards for entities, an honest sitemap, a generated `llms.txt`, IndexNow and Google Indexing scripts, twelve Cursor rules, and the fifteen [OperStack gates](https://www.npmjs.com/package/@operstack/gates) wired in.
 
+Live demo: [demo.oper-stack.com](https://demo.oper-stack.com) (the fictional Isla Verde site, built from this repository with `PREVIEW_NOINDEX=1`).
+
 It ships with a complete fictional demo market, **Isla Verde**: six buyer guides, four district profiles, two comparisons, four project data cards and two news items, every one of which passes all fifteen gates. Replace the market and keep the machinery.
 
 ## Quick start
