@@ -115,3 +115,7 @@ Two build-time variables keep a staging or demo copy out of search engines witho
 - `PREVIEW_NOINDEX=1` marks every page `noindex`, drops the canonical tags and serves a robots.txt that disallows everything.
 
 The public demo of this starter runs with both set. Production builds set neither.
+
+## Social preview image
+
+Every page points `og:image` at `public/og-default.png` (1200 by 630). The shipped file is the Isla Verde demo card: replace it with your own before launch, or set `ogImage` per page in the layouts.
