@@ -44,7 +44,7 @@ const schemas = [
 ];
 const hero = heroImage ? responsive(heroImage, 'hero') : null;
 ---
-<BaseLayout {title} {description} canonical={canonical} type="article" ogImage={heroImage} {noindex} {schemas} preloadImage={hero ?? undefined}>
+<BaseLayout {title} {description} canonical={canonical} markdown={!noindex} type="article" ogImage={heroImage} {noindex} {schemas} preloadImage={hero ?? undefined}>
   <article class="container" style="padding-block: 2rem 4rem;">
     <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: collectionLabel, href: `/${collection}/` }, { label: title }]} />
     <header style="max-width: 46rem; margin-block: 1.5rem 2rem;">

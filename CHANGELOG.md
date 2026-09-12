@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0 (2026-09-11)
+
+- Agent surface: `/.well-known/agent.json` and a markdown rendition of every indexable page
+  (`/guides/slug.md`), both generated from the corpus so they cannot drift from the site. Each
+  page's `<head>` links its own rendition. Gate 16 now passes on the demo: 16 of 16.
+
 ## 0.1.0 (2026-09-10)
 
 First release.

@@ -14,6 +14,8 @@ interface Props {
   noindex?: boolean;
   schemas?: object[];
   preloadImage?: { src: string; srcset?: string; sizes?: string };
+  /** Страница отдаётся ещё и как .md: тогда в head уходит ссылка на неё. */
+  markdown?: boolean;
 }
 
 const {
@@ -25,6 +27,7 @@ const {
   noindex = false,
   schemas = [],
   preloadImage,
+  markdown = false,
 } = Astro.props;
 
 function withTrailingSlash(href: string): string {
@@ -35,6 +38,9 @@ function withTrailingSlash(href: string): string {
   } catch { return href; }
 }
 const canonicalUrl = withTrailingSlash(canonical);
+// Агенту мало того, что markdown-версия существует: он должен узнать о ней со страницы,
+// которую уже открыл. Одна ссылка в head, её не видит ни один человек.
+const markdownUrl = markdown ? `${canonicalUrl.replace(/\/$/, '')}.md` : null;
 const fullTitle = pageTitle(title);
 const og = ogImage ? (ogImage.startsWith('http') ? ogImage : `${SITE_URL}${ogImage}`) : `${SITE_URL}/og-default.png`;
 const allSchemas = [organizationSchema(), websiteSchema(), ...schemas];
@@ -48,6 +54,7 @@ const allSchemas = [organizationSchema(), websiteSchema(), ...schemas];
   <meta name="description" content={description} />
   {noindex || PREVIEW_NOINDEX ? <meta name="robots" content="noindex,follow" /> : <meta name="robots" content="index,follow,max-image-preview:large" />}
   {!noindex && !PREVIEW_NOINDEX && <link rel="canonical" href={canonicalUrl} />}
+  {markdownUrl && !noindex && <link rel="alternate" type="text/markdown" href={markdownUrl} title="Markdown rendition" />}
   <meta property="og:type" content={type} />
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />

@@ -1,5 +1,5 @@
 ---
-description: The fifteen quality gates every page must pass before npx @operstack/gates runs. State of the rules the gates enforce.
+description: The sixteen quality gates every page must pass before npx @operstack/gates runs. State of the rules the gates enforce.
 globs: ["src/content/**/*.mdx", "src/content/**/*.md"]
 alwaysApply: false
 ---

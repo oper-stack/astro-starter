@@ -1,10 +1,10 @@
 # OperStack Astro Starter
 
-An Astro starter for content sites that have to rank, be cited by answer engines and convert. It comes with five content collections, an answer-first article layout, data cards for entities, an honest sitemap, a generated `llms.txt`, IndexNow and Google Indexing scripts, twelve Cursor rules, and the fifteen [OperStack gates](https://www.npmjs.com/package/@operstack/gates) wired in.
+An Astro starter for content sites that have to rank, be cited by answer engines and convert. It comes with five content collections, an answer-first article layout, data cards for entities, an honest sitemap, a generated `llms.txt`, IndexNow and Google Indexing scripts, twelve Cursor rules, an agent card with a markdown rendition of every page, and the sixteen [OperStack gates](https://www.npmjs.com/package/@operstack/gates) wired in.
 
 Live demo: [demo.oper-stack.com](https://demo.oper-stack.com) (the fictional Isla Verde site, built from this repository with `PREVIEW_NOINDEX=1`).
 
-It ships with a complete fictional demo market, **Isla Verde**: six buyer guides, four district profiles, two comparisons, four project data cards and two news items, every one of which passes all fifteen gates. Replace the market and keep the machinery.
+It ships with a complete fictional demo market, **Isla Verde**: six buyer guides, four district profiles, two comparisons, four project data cards and two news items, every one of which passes all sixteen gates. Replace the market and keep the machinery.
 
 ## Quick start
 
@@ -26,14 +26,15 @@ Then:
 
 ```
 site.config.mjs          the single source of truth for names, places, currency, nav, contact, CTA
-gates.config.json        thresholds and allow-lists for the fifteen gates
+gates.config.json        thresholds and allow-lists for the sixteen gates
 src/content/             guides, areas, comparisons, projects (data cards), news
 src/content.config.ts    the two schemas: articleSchema and entitySchema
 src/layouts/             BaseLayout (head, schemas), ArticleLayout, EntityLayout
 src/components/          TldrBlock, FaqBlock, Callout, RelatedGuides, AuthorBox, ContactCta,
                          ResponsiveImage, EntryList, Header, Footer, Breadcrumbs
 src/pages/               routes per collection, home, about, contact, thanks, privacy, 404,
-                         llms.txt, llms-full.txt, robots.txt (all generated from the corpus)
+                         llms.txt, llms-full.txt, robots.txt, .well-known/agent.json and a .md
+                         rendition of every page (all generated from the corpus)
 src/lib/                 site, content (listing, related, reading time), schema (JSON-LD), images
 scripts/                 new-page (scaffold), indexnow, google-indexing, build helpers
 templates/               one MDX skeleton per collection, used by npm run new
@@ -69,7 +70,7 @@ Frontmatter fields every page uses: `title`, `description`, `pubDate`, `updatedD
 |---|---|
 | `npm run dev` | local server with hot reload |
 | `npm run build` | static build into `dist/` |
-| `npm run gates` | run the fifteen gates on the source and the build |
+| `npm run gates` | run the sixteen gates on the source and the build |
 | `npm run verify` | build, then gates with `--fail-on warn` |
 | `npm run new <collection> "<title>"` | scaffold a page from `templates/<collection>.mdx` |
 | `npm run indexnow` | submit the built sitemap's URLs to IndexNow (needs `INDEXNOW_KEY`) |

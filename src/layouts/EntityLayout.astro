@@ -35,7 +35,7 @@ const schemas = [
   { '@context': 'https://schema.org', '@type': 'Place', name, description, url: canonical, address: { '@type': 'PostalAddress', addressRegion: SITE.market.name, addressCountry: SITE.market.countryCode } },
 ];
 ---
-<BaseLayout {title} {description} canonical={canonical} {noindex} {schemas}>
+<BaseLayout {title} {description} canonical={canonical} markdown={!noindex} {noindex} {schemas}>
   <article class="container" style="padding-block: 2rem 4rem; max-width: 52rem;">
     <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: collectionLabel, href: `/${collection}/` }, { label: name }]} />
     <header style="margin-block: 1.5rem 1.5rem;">

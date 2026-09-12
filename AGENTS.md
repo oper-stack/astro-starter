@@ -7,7 +7,7 @@ This is an Astro content site built on the OperStack starter. Read `.cursor/rule
 ```
 npm run dev              # local server
 npm run build            # static build into dist/
-npm run gates            # the fifteen content gates (npx @operstack/gates)
+npm run gates            # the sixteen content gates (npx @operstack/gates)
 npm run verify           # build, then gates with warnings treated as failures
 npm run new guides "Title"   # scaffold a page from templates/guides.mdx
 npm run indexnow         # submit the sitemap to IndexNow (needs INDEXNOW_KEY)

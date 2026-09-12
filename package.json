@@ -1,7 +1,7 @@
 {
   "name": "operstack-astro-starter",
-  "version": "0.1.0",
-  "description": "Astro starter for content sites that have to rank, be cited and convert: config-driven layouts, five content collections, answer-first article template, honest sitemap, llms.txt, IndexNow, and the fifteen OperStack gates wired in. Ships with a fictional demo market, Isla Verde.",
+  "version": "0.2.0",
+  "description": "Astro starter for content sites that have to rank, be cited and convert: config-driven layouts, five content collections, answer-first article template, honest sitemap, llms.txt, IndexNow, an agent card with markdown renditions of every page, and the sixteen OperStack gates wired in. Ships with a fictional demo market, Isla Verde.",
   "type": "module",
   "private": false,
   "license": "MIT",
